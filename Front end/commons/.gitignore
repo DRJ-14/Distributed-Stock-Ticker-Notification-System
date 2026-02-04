@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Java build outputs
+*.class
+
+# logs
+*.log
