@@ -1,37 +1,77 @@
 # Distributed Stock Ticker Notification System (Pub/Sub in Java)
 
-Real-time **stock/news ticker notification system** built using a **custom Publish/Subscribe architecture** in **Java** with **TCP sockets** — no Kafka/RabbitMQ.
+![Java](https://img.shields.io/badge/Java-17%2B-blue)
+![TCP Sockets](https://img.shields.io/badge/TCP-Sockets-success)
+![Distributed Systems](https://img.shields.io/badge/Distributed-Systems-orange)
+![Docker](https://img.shields.io/badge/Docker-optional-informational)
+
+Real-time **stock/news ticker notifications** built with a **custom Publish/Subscribe architecture** in **Java** using **TCP sockets** — **no Kafka/RabbitMQ**.
+
+---
+
+## 🚀 Quickstart (30 seconds)
+
+1. Start **Master Node**
+2. Start **Secondary Node**
+3. Start **Subscribers**
+4. Watch **live topic notifications** stream in real-time 🚀
 
 ---
 
 ## ✨ Key Features
 
 * **Topic-based subscriptions** (e.g., Economic Reports, Sector Performance, Inflation)
-* **Master node + Secondary node** coordination for message routing
-* **Multiple subscribers** receive real-time updates based on subscribed topics
-* **Lightweight TCP socket messaging** with simple protocol handling
+* **Master–Secondary coordination** for routing + registration
+* **Multiple subscribers** receive real-time updates based on topics
+* **Lightweight TCP protocol** (simple message/command handling)
 * Optional **Docker + docker-compose** setup for quick runs
 
 ---
 
 ## 🧠 Architecture Overview
 
-**Master Node** (port `5040`)
+### Diagram (high-level)
+
+```text
+Publisher/News Generator
+        |
+        v
+  Secondary Node (5041)  <---->  Master Node (5040)
+        |
+   -----------------
+   |       |       |
+Sub1     Sub2     Sub3
+(topic filters + real-time updates)
+```
+
+### Master Node (port `5040`)
 
 * Accepts registration from nodes/subscribers
-* Tracks subscribers + topics
-* Routes messages to the correct recipients
+* Maintains **subscriber ↔ topic** mappings
+* Routes updates to the correct recipients
 
-**Secondary Node** (port `5041`)
+### Secondary Node (port `5041`)
 
 * Connects to Master for coordination
 * Accepts subscriber connections
-* Forwards/relays topic updates
+* Forwards/relays topic updates to subscribers
 
-**Subscribers**
+### Subscribers
 
 * Register and subscribe to topics
 * Receive real-time notifications when updates are published
+
+---
+
+## 📸 Demo / Output
+
+> Add a screenshot showing **Master + Secondary + Subscriber receiving updates**.
+
+Example (after uploading a screenshot into the repo):
+
+```md
+![Demo Output](assets/demo.png)
+```
 
 ---
 
@@ -40,13 +80,15 @@ Real-time **stock/news ticker notification system** built using a **custom Publi
 * `master_node/` → Master server (`server1.java`)
 * `secondary_node/` → Secondary server (`server2.java`)
 * `subscriber_1/`, `subscriber_2/`, `subscriber_3/` → Subscriber clients
-* `Front end/` → Simple UI assets (optional)
+* `Front end/` → Optional simple UI assets
 * `docker-compose.yml` → Multi-container orchestration
 * `Dockerfile` → Base container setup
 
 ---
 
-## 🚀 How to Run (Local)
+## 🏃 How to Run (Local)
+
+> Open **4 terminals** and run in this order.
 
 ### 1) Start Master Node
 
@@ -64,7 +106,7 @@ javac server2.java
 java server2 secondary_node
 ```
 
-### 3) Start Subscribers (in separate terminals)
+### 3) Start Subscribers (separate terminals)
 
 ```bash
 cd ../subscriber_1
@@ -72,7 +114,7 @@ javac subscriber1.java
 java subscriber1 subscriber_1
 ```
 
-Repeat similarly for `subscriber_2`, `subscriber_3`.
+Repeat similarly for `subscriber_2` and `subscriber_3`.
 
 ---
 
@@ -86,7 +128,7 @@ docker-compose up --build
 
 ## ✅ Example Flow
 
-1. Subscriber connects and registers (ex: `subscriber_1`)
+1. Subscriber connects and registers (e.g., `subscriber_1`)
 2. Subscriber subscribes to one or more topics
 3. Nodes publish stock/news updates
 4. Subscriber receives real-time messages for subscribed topics
@@ -95,19 +137,28 @@ docker-compose up --build
 
 ## 🛠 Tech Stack
 
-* **Java**
+* **Java (17+)**
 * **TCP Socket Programming**
-* **Docker / Docker Compose**
+* **Distributed Systems (Pub/Sub from scratch)**
+* **Docker / Docker Compose** (optional)
 
 ---
 
-## 📌 Notes / Improvements (Future Work)
+## 🧹 Repo Cleanup (important)
 
-* Add heartbeats + retry for fault tolerance
-* Message serialization (JSON/protobuf)
+Make sure **no `.class` files** are tracked in GitHub:
+
+```bash
+git ls-files | grep "\.class$"
+```
+
+If it prints anything, remove them from tracking and push cleanly.
+
+---
+
+## 📌 Future Improvements
+
+* Heartbeats + retry logic for fault tolerance
+* Message serialization (JSON / Protobuf)
 * Topic persistence + replay
 * Monitoring metrics (latency, throughput)
-
----
-
-If you use this for coursework, keep the README + structure clear and include a short demo video/GIF for maximum impact.
