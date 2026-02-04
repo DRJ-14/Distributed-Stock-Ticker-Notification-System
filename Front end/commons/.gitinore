@@ -1,9 +1,0 @@
-.DS_Store
-__MACOSX/
-*.class
-*.log
-*.tmp
-.idea/
-.vscode/
-*.iml
-git 
