@@ -64,18 +64,6 @@ Sub1     Sub2     Sub3
 
 ---
 
-## 📸 Demo / Output
-
-> Add a screenshot showing **Master + Secondary + Subscriber receiving updates**.
-
-Example (after uploading a screenshot into the repo):
-
-```md
-![Demo Output](assets/demo.png)
-```
-
----
-
 ## 📁 Project Structure
 
 * `master_node/` → Master server (`server1.java`)
